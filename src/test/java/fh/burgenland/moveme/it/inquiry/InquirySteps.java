@@ -5,6 +5,7 @@ import fh.burgenland.moveme.inquiry.api.InquiryContactAnswer;
 import fh.burgenland.moveme.inquiry.api.InquiryForLocalMove;
 import fh.burgenland.moveme.inquiry.api.InquiryLocation;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -21,7 +22,7 @@ public class InquirySteps {
     @Autowired
     private transient InquiryContext inquiryContext;
 
-    @Given("{client} wants to move from {location} to {location}")
+    @Given("{client} wants to move from {location} to {location}") // "location" z.B. stammt von LocationParameterType
     public void clientWantsToMoveFromTo(TestClient client, TestLocation from, TestLocation to) {
         this.inquiryContext.client = client;
         this.inquiryContext.fromLocation = from;
@@ -33,8 +34,8 @@ public class InquirySteps {
         this.inquiryContext.contactInformation = contactNumber;
     }
 
-    @When("she inquires support for the movement")
-    public void sheInquiresSupportForTheMovement() {
+    @When("{word} inquires support for the movement")
+    public void sheInquiresSupportForTheMovement(String gender) {
         var contact = InquiryContact.builder().name(this.inquiryContext.client.getName()).telephoneNumber(this.inquiryContext.contactInformation.getTelephoneNumber()).build();
         var fromLocation = InquiryLocation.builder().street(this.inquiryContext.fromLocation.getStreet()).zip(this.inquiryContext.fromLocation.getZip()).city(this.inquiryContext.fromLocation.getCity()).build();
         var toLocation = InquiryLocation.builder().street(this.inquiryContext.toLocation.getStreet()).zip(this.inquiryContext.toLocation.getZip()).city(this.inquiryContext.toLocation.getCity()).build();
@@ -53,14 +54,20 @@ public class InquirySteps {
                 .blockFirst();
     }
 
-    @When("she gets a reference number back")
-    public void sheGetsAReferenceNumberBack() {
+    @Then("{word} gets a reference number back")
+    public void sheGetsAReferenceNumberBack(String gender) {
         assertThat(this.inquiryContext.inquiryContactAnswer.getReferenceNumber())
                 .isEqualTo("IFLM_" + this.inquiryContext.client.getName().toUpperCase(Locale.ROOT).replace(" ", "_") + "_WIEN");
     }
 
-    @When("the information she will get contacted within the next {int} hours")
+    @Then("the information she will get contacted within the next {int} hours")
     public void theInformationSheWillGetContactedWithinTheNext24Hours(int hours) {
         assertThat(this.inquiryContext.inquiryContactAnswer.getAnswerHour()).isEqualTo(hours);
+        assertThat(!this.inquiryContext.inquiryContactAnswer.isError());
+    }
+
+    @Then("{word} gets an error back because the cities are not the same!")
+    public void sheGetsAnErrorBack(String gender) {
+        assertThat(this.inquiryContext.inquiryContactAnswer.isError());
     }
 }

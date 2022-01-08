@@ -22,8 +22,10 @@ class InquiryForLocalMoveServiceTest {
     void should_inquire_the_movement_successfully() {
         var inquiryDomain = getInquiryDomainForAlexiPaoli();
         Mockito.when(repository.save(inquiryDomain)).thenReturn(inquiryDomain);
-        var service = new InquiryForLocalMoveService(repository);
+
         var inquiry = getInquiryForAlexiPaoli();
+
+        var service = new InquiryForLocalMoveService(repository);
         var domainResult = service.inquiry(inquiry);
 
         Mockito.verify(this.repository, times(1)).save(inquiryDomain);
