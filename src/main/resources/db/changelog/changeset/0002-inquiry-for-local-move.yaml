@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: addColumn
+      author: groupTwo
+      changes:
+        - addColumn:
+            tableName: INQUIRY_FOR_LOCAL_MOVE
+            columns:
+              - column:
+                  name: referenceNumber
+                  type: varchar(255)
