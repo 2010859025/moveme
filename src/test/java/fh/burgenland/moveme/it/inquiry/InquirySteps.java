@@ -7,6 +7,7 @@ import fh.burgenland.moveme.inquiry.api.InquiryLocation;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -60,14 +61,14 @@ public class InquirySteps {
                 .isEqualTo("IFLM_" + this.inquiryContext.client.getName().toUpperCase(Locale.ROOT).replace(" ", "_") + "_WIEN");
     }
 
-    @Then("the information she will get contacted within the next {int} hours")
-    public void theInformationSheWillGetContactedWithinTheNext24Hours(int hours) {
+    @Then("the information {word} will get contacted within the next {int} hours")
+    public void theInformationSheWillGetContactedWithinTheNext24Hours(String gender, int hours) {
         assertThat(this.inquiryContext.inquiryContactAnswer.getAnswerHour()).isEqualTo(hours);
-        assertThat(!this.inquiryContext.inquiryContactAnswer.isError());
+        Assertions.assertFalse(this.inquiryContext.inquiryContactAnswer.isError());
     }
 
     @Then("{word} gets an error back because the cities are not the same!")
     public void sheGetsAnErrorBack(String gender) {
-        assertThat(this.inquiryContext.inquiryContactAnswer.isError());
+        Assertions.assertTrue(this.inquiryContext.inquiryContactAnswer.isError());
     }
 }
