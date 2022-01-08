@@ -22,3 +22,16 @@ working on the same project across various editors and IDEs
 ### Examples
 See further details at https://editorconfig.org/#example-file
 
+## PMD
+
+### How to start the pmd analysis
+add plugin "pmd" to build.gradle
+
+    plugins {
+        id 'pmd'
+    }
+
+execute command:
+
+    gradle check
+

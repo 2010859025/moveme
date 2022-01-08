@@ -16,7 +16,7 @@ import static org.mockito.Mockito.times;
 class InquiryForLocalMoveServiceTest {
 
     @Mock
-    private InquiryForLocalMoveRepository repository;
+    private transient InquiryForLocalMoveRepository repository;
 
     @Test
     void should_inquire_the_movement_successfully() {

@@ -10,10 +10,10 @@ public class VersionSteps {
 
     // https://github.com/eugenp/tutorials/blob/master/spring-cucumber/src/test/java/com/baeldung/SpringIntegrationTest.java
     @Autowired
-    private WebTestClient webClient;
+    private transient WebTestClient webClient;
 
     @Autowired
-    private WebResponseContext context;
+    private transient WebResponseContext context;
 
     @When("the application is asked for the version")
     public void the_version_is_retrieved() {

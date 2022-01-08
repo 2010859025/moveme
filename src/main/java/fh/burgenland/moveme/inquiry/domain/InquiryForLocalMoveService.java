@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InquiryForLocalMoveService {
 
-    private final InquiryForLocalMoveRepository repository;
+    private final transient InquiryForLocalMoveRepository repository;
 
     @Autowired()
     public InquiryForLocalMoveService(InquiryForLocalMoveRepository repository) {

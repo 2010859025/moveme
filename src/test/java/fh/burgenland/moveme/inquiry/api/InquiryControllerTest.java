@@ -24,10 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class InquiryControllerTest {
 
     @Autowired
-    protected MockMvc mvc;
+    protected transient MockMvc mvc;
 
     @MockBean
-    InquiryForLocalMoveService service;
+    transient InquiryForLocalMoveService service;
 
     @Test
     public void should_return_http_201_for_successfully_creation_of_inquiry_for_local_move() throws Exception {

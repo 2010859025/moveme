@@ -16,10 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InquirySteps {
 
     @Autowired
-    private WebTestClient webClient;
+    private transient WebTestClient webClient;
 
     @Autowired
-    private InquiryContext inquiryContext;
+    private transient InquiryContext inquiryContext;
 
     @Given("{client} wants to move from {location} to {location}")
     public void clientWantsToMoveFromTo(TestClient client, TestLocation from, TestLocation to) {
